@@ -17,7 +17,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public Member join(Member member) {
+    public Member save(Member member) {
 
         member.setAuthLevel(AuthLevel.USER);
 
