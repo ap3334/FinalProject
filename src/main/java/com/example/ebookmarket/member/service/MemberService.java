@@ -60,7 +60,16 @@ public class MemberService {
 
     }
 
-    public Member modifyPassword(Member member, String password) {
+    public Member modifyPassword(Member member, String oldPassword, String password, String passwordConfirm) {
+
+
+        if (!checkPassword(member, oldPassword)) {
+            return member;
+        }
+
+        if (password != passwordConfirm) {
+            return member;
+        }
 
         String encodePassword = encoder.encode(password);
 
@@ -69,5 +78,17 @@ public class MemberService {
         memberRepository.save(member);
 
         return member;
+    }
+
+    public String findUsername(String email) {
+
+        Member member = memberRepository.findByEmail(email).orElse(null);
+
+        if (member != null) {
+            return member.getUsername();
+        } else {
+            return null;
+        }
+
     }
 }

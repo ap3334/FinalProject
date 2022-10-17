@@ -27,7 +27,7 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private AuthLevel authLevel;
 
-    public Member(String username, String password, String nickname, String email) {
+    public Member(String username, String password, String email, String nickname) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;

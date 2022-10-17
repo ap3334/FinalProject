@@ -65,17 +65,23 @@ public class MemberController {
         Member member = memberService.findByUsername(memberContext.getUsername()).orElseThrow(() ->
                 new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
 
-        if (!memberService.checkPassword(member, oldPassword)) {
-            return member;
-        }
-
-        if (password != passwordConfirm) {
-            return member;
-        }
-
-        Member modifiedMember = memberService.modifyPassword(member, password);
+        Member modifiedMember = memberService.modifyPassword(member, oldPassword, password, passwordConfirm);
 
         return modifiedMember;
+    }
+
+    @GetMapping("/findUsername")
+    public String findUsernameForm() {
+
+        return "findUsernameForm";
+    }
+
+    @PostMapping("/findUsername")
+    public String modifyPassword(String email) {
+
+        String username = memberService.findUsername(email);
+
+        return username;
     }
 
 
