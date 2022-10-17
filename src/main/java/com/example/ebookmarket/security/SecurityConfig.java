@@ -30,6 +30,14 @@ public class SecurityConfig {
                 .authorizeRequests(
                         authorizeRequests -> authorizeRequests.antMatchers("/**")
                                 .permitAll()
+                )
+                .formLogin(
+                        formLogin -> formLogin.loginPage("/member/login")
+                                .loginProcessingUrl("/member/login")
+                                .defaultSuccessUrl("/")
+                )
+                .logout(
+                        logout -> logout.logoutUrl("/member/logout")
                 );
 
         return http.build();

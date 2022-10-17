@@ -2,7 +2,9 @@ package com.example.ebookmarket.member.controller;
 
 import com.example.ebookmarket.member.entity.Member;
 import com.example.ebookmarket.member.service.MemberService;
+import com.example.ebookmarket.security.dto.MemberContext;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +27,13 @@ public class MemberController {
         Member joinMember = memberService.join(member);
 
         return joinMember;
+    }
+
+
+    @GetMapping("/login")
+    public String loginForm() {
+
+        return "login";
     }
 
 
