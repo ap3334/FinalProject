@@ -24,7 +24,7 @@ public class MemberController {
     @PostMapping("/join")
     public Member join(Member member) {
 
-        Member joinMember = memberService.save(member);
+        Member joinMember = memberService.join(member);
 
         return joinMember;
     }
@@ -48,13 +48,36 @@ public class MemberController {
         Member member = memberService.findByUsername(memberContext.getUsername()).orElseThrow(() ->
                 new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
 
-        member.setEmail(email);
-        member.setNickname(nickname);
-
-        memberService.save(member);
+        memberService.modify(member, email, nickname);
 
         return member;
     }
+
+    @GetMapping("/modifyPassword")
+    public String modifyPasswordForm() {
+
+        return "modify";
+    }
+
+    @PostMapping("/modifyPassword")
+    public Member modifyPassword(@AuthenticationPrincipal MemberContext memberContext, String oldPassword, String password, String passwordConfirm) {
+
+        Member member = memberService.findByUsername(memberContext.getUsername()).orElseThrow(() ->
+                new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+
+        if (!memberService.checkPassword(member, oldPassword)) {
+            return member;
+        }
+
+        if (password != passwordConfirm) {
+            return member;
+        }
+
+        Member modifiedMember = memberService.modifyPassword(member, password);
+
+        return modifiedMember;
+    }
+
 
 
 }

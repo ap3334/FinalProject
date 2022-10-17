@@ -17,7 +17,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public Member save(Member member) {
+    public Member join(Member member) {
 
         member.setAuthLevel(AuthLevel.USER);
 
@@ -34,5 +34,40 @@ public class MemberService {
 
     public Optional<Member> findByUsername(String username) {
         return memberRepository.findByUsername(username);
+    }
+
+    public Member modify(Member member, String email, String nickname) {
+
+        member.setEmail(email);
+        member.setNickname(nickname);
+
+        memberRepository.save(member);
+
+        return member;
+
+    }
+
+    public boolean checkPassword(Member member, String password) {
+
+        String encodePassword = encoder.encode(password);
+
+        if (member.getPassword() == encodePassword) {
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
+
+    public Member modifyPassword(Member member, String password) {
+
+        String encodePassword = encoder.encode(password);
+
+        member.setPassword(encodePassword);
+
+        memberRepository.save(member);
+
+        return member;
     }
 }
