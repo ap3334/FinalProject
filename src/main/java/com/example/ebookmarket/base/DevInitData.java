@@ -16,10 +16,10 @@ public class DevInitData {
         return args -> {
 
             String password = "1234";
-            Member member1 = memberService.join(new Member("user1", password, "user1@test.com", "user1nickname"));
-            Member member2 = memberService.join(new Member("user2", password, "user2@test.com", "user2nickname"));
-            Member member3 = memberService.join(new Member("user3", password, "user3@test.com", "user3nickname"));
-            Member member4 = memberService.join(new Member("user4", password, "user4@test.com", "user4nickname"));
+            Member member1 = memberService.join(new Member("user1", password, "chwil2989@gmail.com", "user1nickname"));
+//            Member member2 = memberService.join(new Member("user2", password, "chwil2989@gmail.com", "user2nickname"));
+//            Member member3 = memberService.join(new Member("user3", password, "chwil2989@gmail.com", "user3nickname"));
+//            Member member4 = memberService.join(new Member("user4", password, "chwil2989@gmail.com", "user4nickname"));
 
         };
     }
