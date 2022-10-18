@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -89,6 +90,34 @@ public class MemberService {
         } else {
             return null;
         }
+
+    }
+
+    public String findPassword(String username, String email) {
+
+        Member memberByUsername = memberRepository.findByUsername(username).orElse(null);
+        Member memberByEmail = memberRepository.findByEmail(email).orElse(null);
+
+        if (memberByUsername != memberByEmail || memberByUsername == null) {
+            return null;
+        }
+
+        String tempPassword = String.valueOf(UUID.randomUUID()).substring(0, 15);
+
+        System.out.println(tempPassword);
+
+        changeTempPassword(memberByUsername, tempPassword);
+
+        return tempPassword;
+    }
+
+    private void changeTempPassword(Member member, String tempPassword) {
+
+        String encodePassword = encoder.encode(tempPassword);
+
+        member.setPassword(encodePassword);
+
+        memberRepository.save(member);
 
     }
 }

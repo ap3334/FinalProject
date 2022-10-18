@@ -77,13 +77,26 @@ public class MemberController {
     }
 
     @PostMapping("/findUsername")
-    public String modifyPassword(String email) {
+    public String findUsername(String email) {
 
         String username = memberService.findUsername(email);
 
         return username;
     }
 
+    @GetMapping("/findPassword")
+    public String findPasswordForm() {
+
+        return "findPasswordForm";
+    }
+
+    @PostMapping("/findPassword")
+    public String findPassword(String username, String email) {
+
+        String tempPassword = memberService.findPassword(username, email);
+
+        return tempPassword;
+    }
 
 
 }
