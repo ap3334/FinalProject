@@ -164,4 +164,14 @@ public class MemberService {
 
     }
 
+    public boolean checkUsernameOverlap(String username) {
+
+        Optional<Member> result = memberRepository.findByUsername(username);
+
+        if (result.isPresent()) {
+            return true;
+        }
+
+        return false;
+    }
 }
