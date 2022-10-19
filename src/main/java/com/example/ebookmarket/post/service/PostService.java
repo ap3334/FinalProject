@@ -9,6 +9,9 @@ import com.example.ebookmarket.post.repository.PostHashTagRepository;
 import com.example.ebookmarket.post.repository.PostKeywordRepository;
 import com.example.ebookmarket.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -67,6 +70,14 @@ public class PostService {
 
         return post;
 
+
+    }
+
+    public List<Post> getLatestPost(int cnt) {
+
+        Pageable pageable = PageRequest.of(0, cnt, Sort.by("createDate"));
+
+        return postRepository.findAll(pageable).stream().toList();
 
     }
 }

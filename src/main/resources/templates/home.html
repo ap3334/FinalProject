@@ -10,7 +10,11 @@
 
   <div class="container">
 
-    <div>안녕</div>
+    <ul>
+      <li th:each="post: ${posts}">
+        <div>[[${post.subject}]] -- [[${post.author.username}]]</div>
+      </li>
+    </ul>
   </div>
 
 </section>
