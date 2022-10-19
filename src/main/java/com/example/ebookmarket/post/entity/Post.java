@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -22,8 +23,10 @@ public class Post extends BaseEntity {
 
     private String subject;
 
+    @Lob
     private String content;
 
+    @Lob
     private String contentHtml;
 
 }
