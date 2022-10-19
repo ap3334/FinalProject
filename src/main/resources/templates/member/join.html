@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout.html}">
+
+<head>
+    <title>회원가입</title>
+</head>
+
+<body>
+<section layout:fragment="content">
+    <div class="container">
+        <h1>회원가입</h1>
+
+        <form th:action method="POST" onsubmit="JoinForm__submit(this); return false;">
+            <div>
+                <span>아이디</span>
+                <input type="text" name="username" id="username">
+            </div>
+            <button type="button" id="idCheckBtn">중복 확인</button>
+            <input type="hidden" id="isOverlap" value="true" name="isOverlap">
+            <div>
+                <span>비밀번호</span>
+                <input type="password" name="password">
+            </div>
+            <div>
+                <span>비밀번호확인</span>
+                <input type="password" name="passwordConfirm">
+            </div>
+            <div>
+                <span>이메일</span>
+                <input type="email" name="email">
+            </div>
+            <div>
+                <span>닉네임</span>
+                <input type="text" name="nickname">
+            </div>
+            <div>
+                <span>가입</span>
+                <input type="submit" value="가입">
+            </div>
+        </form>
+    </div>
+
+    <script src="/js/member/join.js">
+    </script>
+</section>
+</body>
+</html>

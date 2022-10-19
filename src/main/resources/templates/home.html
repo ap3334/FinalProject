@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout.html}">
+
+<head>
+  <title>메인</title>
+</head>
+
+<body>
+<section layout:fragment="content">
+
+  <div class="container">
+
+    <ul>
+      <li th:each="post: ${posts}">
+        <div>[[${post.subject}]] -- [[${post.author.username}]]</div>
+      </li>
+    </ul>
+  </div>
+
+</section>
+</body>
+</html>
