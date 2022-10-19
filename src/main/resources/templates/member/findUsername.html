@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout.html}">
+
+<head>
+    <title>로그인</title>
+</head>
+
+<body>
+<section layout:fragment="content">
+    <div class="container">
+        <h1>아이디 찾기</h1>
+
+        <script>
+            function FindUsernameForm__submit(form) {
+
+                form.email.value = form.email.value.trim();
+
+                if (form.email.value.length == 0) {
+                    alert("이메일을 입력해주세요.");
+                    form.email.focus();
+                    return;
+                }
+
+                form.submit();
+            }
+
+        </script>
+
+        <form th:action method="POST" onsubmit="FindUsernameForm__submit(this); return false;">
+            <div>
+                <span>이메일</span>
+                <input type="text" name="email">
+            </div>
+            <div>
+                <input type="submit" value="아이디 찾기">
+            </div>
+        </form>
+
+    </div>
+
+</section>
+</body>
+</html>

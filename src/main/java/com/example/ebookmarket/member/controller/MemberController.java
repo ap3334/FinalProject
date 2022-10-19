@@ -108,21 +108,25 @@ public class MemberController {
     @GetMapping("/findUsername")
     public String findUsernameForm() {
 
-        return "findUsernameForm";
+        return "member/findUsername";
     }
 
     @PostMapping("/findUsername")
-    public String findUsername(String email) {
+    public String findUsername(String email, Model model) {
 
         String username = memberService.findUsername(email);
 
-        return username;
+        model.addAttribute("username", username);
+
+        System.out.println(username);
+
+        return "member/foundUsername";
     }
 
     @GetMapping("/findPassword")
     public String findPasswordForm() {
 
-        return "findPasswordForm";
+        return "member/findPassword";
     }
 
     @PostMapping("/findPassword")
