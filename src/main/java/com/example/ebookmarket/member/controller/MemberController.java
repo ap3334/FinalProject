@@ -134,7 +134,8 @@ public class MemberController {
 
         String tempPassword = memberService.findPassword(username, email);
 
-        return tempPassword;
+        return "member/foundPassword";
+
     }
 
 
