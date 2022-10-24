@@ -1,10 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html layout:decorate="~{layout/layout.html}">
 
+<head>
+
+    <title>글수정</title>
+
+</head>
+
+<body>
+<section layout:fragment="content">
+    <div class="container">
+        <h1>글수정</h1>
+
+
+        <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+
+        <form id="writeForm">
+
+            <input type="hidden" id="postId" th:value="${post.id}">
+
+            <div>
+                <span>제목</span>
+                <input type="text" name="subject" id="subject" th:value="${post.subject}">
+            </div>
+
+            <div class="row">
+                <span>내용</span>
+                <div id="editor">
+                </div>
+                <input type="hidden" id="originalContent" th:value="${post.contentMarkdown}">
+            </div>
+
+            <div>
+                <span>키워드</span>
+                <input type="text" name="keywords" id="keywords" th:value="${post.hashTagContents}">
+            </div>
+
+            <div>
+                <span>등록</span>
+                <input type="button" value="등록" id="writeBtn">
+            </div>
+        </form>
+    </div>
+
+    <script src="/js/post/modify.js"></script>
+</section>
 </body>
 </html>

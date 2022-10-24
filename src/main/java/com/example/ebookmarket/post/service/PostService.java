@@ -7,11 +7,9 @@ import com.example.ebookmarket.post.dto.PostListDto;
 import com.example.ebookmarket.post.entity.Post;
 import com.example.ebookmarket.postHashTag.entity.PostHashTag;
 import com.example.ebookmarket.postHashTag.service.PostHashTagService;
-import com.example.ebookmarket.postKeyword.entity.PostKeyword;
-import com.example.ebookmarket.postHashTag.repository.PostHashTagRepository;
-import com.example.ebookmarket.postKeyword.repository.PostKeywordRepository;
 import com.example.ebookmarket.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -23,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PostService {
 
     private final PostRepository postRepository;
@@ -52,7 +51,7 @@ public class PostService {
         return dto;
     }
 
-    public PostDetailDto getPost(Long id) {
+    public PostDetailDto getPostDetailDto(Long id) {
 
         Post post = postRepository.findById(id).orElseThrow(() ->
              new IllegalArgumentException("no such data")
@@ -73,7 +72,8 @@ public class PostService {
                 .username(post.getAuthor().getUsername())
                 .createDate(post.getCreateDate())
                 .updateDate(post.getUpdateDate())
-                .content(post.getContentHtml())
+                .contentHtml(post.getContentHtml())
+                .contentMarkdown(post.getContent())
                 .hashTagContents(post.getExtra_inputValue_hashTagContents())
                 .build();
 
@@ -87,10 +87,11 @@ public class PostService {
     }
 
 
-    public Post writePost(PostFormDto post, Long id) {
-        return writePost(post, new Member(id));
+    public Post writePost(PostFormDto post, Long memberId) {
+        return writePost(post, new Member(memberId));
     }
 
+    @Transactional
     public Post writePost(PostFormDto postFormDto, Member member) {
 
         Post post = Post.builder()
@@ -125,4 +126,22 @@ public class PostService {
         postRepository.deleteById(id);
 
     }
+
+    @Transactional
+    public void modify(Long postId, PostFormDto postFormDto) {
+
+        Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException());
+
+        post.setSubject(postFormDto.getSubject());
+        post.setContent(post.getContent());
+        post.setContentHtml(postFormDto.getContentHtml());
+
+        postRepository.save(post);
+
+        log.info(postFormDto.getKeywords());
+
+        postHashTagService.applyHashTags(post, postFormDto.getKeywords());
+
+    }
+
 }

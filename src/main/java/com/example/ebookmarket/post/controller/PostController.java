@@ -1,6 +1,5 @@
 package com.example.ebookmarket.post.controller;
 
-import com.example.ebookmarket.member.entity.Member;
 import com.example.ebookmarket.member.service.MemberService;
 import com.example.ebookmarket.post.dto.PostDetailDto;
 import com.example.ebookmarket.post.dto.PostFormDto;
@@ -9,21 +8,21 @@ import com.example.ebookmarket.post.entity.Post;
 import com.example.ebookmarket.post.service.PostService;
 import com.example.ebookmarket.security.dto.MemberContext;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.sound.midi.MetaMessage;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/post")
+@Slf4j
 public class PostController {
 
     private final PostService postService;
@@ -42,7 +41,7 @@ public class PostController {
     @GetMapping("/{id}")
     public String getPost(@PathVariable Long id, Model model) {
 
-        PostDetailDto post = postService.getPost(id);
+        PostDetailDto post = postService.getPostDetailDto(id);
 
         model.addAttribute("post", post);
 
@@ -65,20 +64,30 @@ public class PostController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-/*    @GetMapping("/{id}/modify")
-    public String modifyPostForm(@PathVariable Long id, Model model) {
+    @GetMapping("/{id}/modify")
+    public String modify(@PathVariable Long id, Model model) {
 
-        PostDetailDto post = postService.getPost(id);
+        PostDetailDto post = postService.getPostDetailDto(id);
 
         model.addAttribute("post", post);
 
         return "post/modify";
-    }*/
+    }
+
+    @PostMapping("/{id}/modify")
+    public ResponseEntity modify(@AuthenticationPrincipal MemberContext memberContext,
+                                 @PathVariable Long id,
+                                 @RequestBody PostFormDto postFormDto) {
+
+        postService.modify(id, postFormDto);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
 
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable Long id, @AuthenticationPrincipal MemberContext memberContext) {
 
-        PostDetailDto post = postService.getPost(id);
+        PostDetailDto post = postService.getPostDetailDto(id);
 
         if (!post.getUsername().equals(memberContext.getUsername())) {
             throw new IllegalArgumentException("접근 권한이 없습니다.");

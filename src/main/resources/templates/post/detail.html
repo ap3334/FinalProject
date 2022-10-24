@@ -18,17 +18,17 @@
         <form id="writeForm">
             <div>
                 <span>제목</span>
-                <input type="text" name="subject" id="subject" th:value="${post.subject}">
+                <input type="text" name="subject" id="subject" th:value="${post.subject}" readonly>
             </div>
 
             <div>
                 <span>내용</span>
-                <div th:utext="${post.content}"></div>
+                <div th:utext="${post.getContentHtml}"></div>
             </div>
 
             <div>
                 <span>키워드</span>
-                <input type="text" name="keywords" id="keywords" th:value="${post.hashTagContents}">
+                <input type="text" name="keywords" id="keywords" th:value="${post.hashTagContents}" readonly>
             </div>
 
 
