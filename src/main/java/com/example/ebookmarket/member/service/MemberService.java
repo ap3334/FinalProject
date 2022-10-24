@@ -9,6 +9,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -23,9 +24,16 @@ public class MemberService {
 
     private final JavaMailSender mailSender;
 
+    @Transactional
+
     public Member join(Member member) {
 
-        member.setAuthLevel(AuthLevel.USER);
+        if (member.getNickname().trim().length() == 0) {
+            member.setAuthLevel(AuthLevel.USER);
+        }
+        else {
+            member.setAuthLevel(AuthLevel.AUTHOR);
+        }
 
         String rawPassword = member.getPassword();
         String encodePassword = encoder.encode(rawPassword);
@@ -45,10 +53,15 @@ public class MemberService {
         return memberRepository.findByUsername(username);
     }
 
+    @Transactional
     public Member modify(Member member, String email, String nickname) {
 
         member.setEmail(email);
-        member.setNickname(nickname);
+
+        if (nickname.trim().length() > 0) {
+            member.setNickname(nickname);
+            member.setAuthLevel(AuthLevel.AUTHOR);
+        }
 
         memberRepository.save(member);
 

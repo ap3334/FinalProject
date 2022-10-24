@@ -95,7 +95,7 @@ public class PostController {
 
         postService.delete(id);
 
-        return "redirect:/";
+        return "redirect:/post/list";
     }
 
 

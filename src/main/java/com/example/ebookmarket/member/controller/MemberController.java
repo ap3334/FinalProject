@@ -13,7 +13,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/member")
@@ -23,7 +26,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/join")
-    public String joinForm() {
+    public String join() {
 
         return "member/join";
     }
@@ -52,7 +55,7 @@ public class MemberController {
 
 
     @GetMapping("/login")
-    public String loginForm() {
+    public String login() {
 
         return "member/login";
     }
@@ -64,16 +67,13 @@ public class MemberController {
     }
 
     @GetMapping("/modify")
-    public String modifyForm() {
+    public String modify() {
 
         return "member/modify";
     }
 
     @PostMapping("/modify")
     public String modify(@AuthenticationPrincipal MemberContext memberContext, String email, String nickname) {
-
-        System.out.println(email);
-        System.out.println(nickname);
 
         Member member = memberService.findByUsername(memberContext.getUsername()).orElseThrow(() ->
                 new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
@@ -88,7 +88,7 @@ public class MemberController {
     }
 
     @GetMapping("/modifyPassword")
-    public String modifyPasswordForm() {
+    public String modifyPassword() {
 
         return "member/modifyPassword";
     }
@@ -106,7 +106,7 @@ public class MemberController {
     }
 
     @GetMapping("/findUsername")
-    public String findUsernameForm() {
+    public String findUsername() {
 
         return "member/findUsername";
     }
@@ -124,7 +124,7 @@ public class MemberController {
     }
 
     @GetMapping("/findPassword")
-    public String findPasswordForm() {
+    public String findPassword() {
 
         return "member/findPassword";
     }
