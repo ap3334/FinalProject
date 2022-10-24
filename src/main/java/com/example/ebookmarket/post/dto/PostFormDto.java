@@ -6,7 +6,7 @@ import lombok.*;
 @Setter
 @ToString
 @Builder
-public class PostForm {
+public class PostFormDto {
 
     private String subject;
     private String content;

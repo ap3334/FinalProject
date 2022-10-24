@@ -1,7 +1,8 @@
 package com.example.ebookmarket.post.service;
 
 import com.example.ebookmarket.member.entity.Member;
-import com.example.ebookmarket.post.dto.PostForm;
+import com.example.ebookmarket.post.dto.PostDetailDto;
+import com.example.ebookmarket.post.dto.PostFormDto;
 import com.example.ebookmarket.post.dto.PostListDto;
 import com.example.ebookmarket.post.entity.Post;
 import com.example.ebookmarket.postHashTag.entity.PostHashTag;
@@ -52,35 +53,52 @@ public class PostService {
         return dto;
     }
 
-    public Post getPost(Long id) {
+    public PostDetailDto getPost(Long id) {
 
         Post post = postRepository.findById(id).orElseThrow(() ->
              new IllegalArgumentException("no such data")
         );
 
-        getPostForPrint(post);
+        getHashTagFromPost(post);
 
-        return post;
+        PostDetailDto postDetailDtos = postToDetailDto(post);
+
+        return postDetailDtos;
     }
 
-    private void getPostForPrint(Post post) {
+    private PostDetailDto postToDetailDto(Post post) {
+
+        PostDetailDto dto = PostDetailDto.builder()
+                .id(post.getId())
+                .subject(post.getSubject())
+                .username(post.getAuthor().getUsername())
+                .createDate(post.getCreateDate())
+                .updateDate(post.getUpdateDate())
+                .content(post.getContentHtml())
+                .hashTagContents(post.getExtra_inputValue_hashTagContents())
+                .build();
+
+        return dto;
+    }
+
+    private void getHashTagFromPost(Post post) {
         List<PostHashTag> postHashTags = postHashTagService.getHashTags(post);
 
-//        post.getExtra().put
+        post.getExtra().put("postHashTags", postHashTags);
     }
 
-    public Post writePost(PostForm postForm, Member member) {
+    public Post writePost(PostFormDto postFormDto, Member member) {
 
         Post post = Post.builder()
                 .author(member)
-                .subject(postForm.getSubject())
-                .content(postForm.getContent())
-                .contentHtml(postForm.getContentHtml())
+                .subject(postFormDto.getSubject())
+                .content(postFormDto.getContent())
+                .contentHtml(postFormDto.getContentHtml())
                 .build();
 
         postRepository.save(post);
 
-        String keywords[] = postForm.getKeywords().split("#");
+        String keywords[] = postFormDto.getKeywords().split("#");
 
         for (int i = 1; i < keywords.length; i++) {
             PostKeyword postKeywords = PostKeyword.builder()

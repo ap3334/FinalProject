@@ -2,7 +2,8 @@ package com.example.ebookmarket.post.controller;
 
 import com.example.ebookmarket.member.entity.Member;
 import com.example.ebookmarket.member.service.MemberService;
-import com.example.ebookmarket.post.dto.PostForm;
+import com.example.ebookmarket.post.dto.PostDetailDto;
+import com.example.ebookmarket.post.dto.PostFormDto;
 import com.example.ebookmarket.post.dto.PostListDto;
 import com.example.ebookmarket.post.entity.Post;
 import com.example.ebookmarket.post.service.PostService;
@@ -40,7 +41,7 @@ public class PostController {
     @GetMapping("/{id}")
     public String getPost(@PathVariable Long id, Model model) {
 
-        Post post = postService.getPost(id);
+        PostDetailDto post = postService.getPost(id);
 
         model.addAttribute("post", post);
 
@@ -54,7 +55,7 @@ public class PostController {
     }
 
     @PostMapping("/write")
-    public ResponseEntity write(@AuthenticationPrincipal MemberContext memberContext, @RequestBody PostForm post, RedirectAttributes redirectAttributes) {
+    public ResponseEntity write(@AuthenticationPrincipal MemberContext memberContext, @RequestBody PostFormDto post, RedirectAttributes redirectAttributes) {
 
         Member member = memberService.findByUsername(memberContext.getUsername()).orElseThrow(() ->
                 new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
@@ -69,7 +70,7 @@ public class PostController {
     @GetMapping("/{id}/modify")
     public String modifyPostForm(@PathVariable Long id, Model model) {
 
-        Post post = postService.getPost(id);
+        PostDetailDto post = postService.getPost(id);
 
         model.addAttribute("post", post);
 
