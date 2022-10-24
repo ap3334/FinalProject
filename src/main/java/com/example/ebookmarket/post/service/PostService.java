@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,8 +26,6 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final PostKeywordRepository postKeywordRepository;
-    private final PostHashTagRepository postHashTagRepository;
 
     private final PostHashTagService postHashTagService;
 
@@ -118,4 +117,12 @@ public class PostService {
 
     }
 
+    @Transactional
+    public void delete(Long id) {
+
+        postHashTagService.deleteByPostId(id);
+
+        postRepository.deleteById(id);
+
+    }
 }

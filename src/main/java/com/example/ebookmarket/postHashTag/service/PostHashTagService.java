@@ -76,4 +76,10 @@ public class PostHashTagService {
 
         return hashTag;
     }
+
+    public void deleteByPostId(Long postId) {
+
+        postHashTagRepository.deleteByPostId(postId);
+
+    }
 }

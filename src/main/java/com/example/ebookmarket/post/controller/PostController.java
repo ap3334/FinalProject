@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.sound.midi.MetaMessage;
 import java.util.List;
 
 @Controller
@@ -64,7 +65,7 @@ public class PostController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("/{id}/modify")
+/*    @GetMapping("/{id}/modify")
     public String modifyPostForm(@PathVariable Long id, Model model) {
 
         PostDetailDto post = postService.getPost(id);
@@ -72,6 +73,20 @@ public class PostController {
         model.addAttribute("post", post);
 
         return "post/modify";
+    }*/
+
+    @GetMapping("/{id}/delete")
+    public String delete(@PathVariable Long id, @AuthenticationPrincipal MemberContext memberContext) {
+
+        PostDetailDto post = postService.getPost(id);
+
+        if (!post.getUsername().equals(memberContext.getUsername())) {
+            throw new IllegalArgumentException("접근 권한이 없습니다.");
+        }
+
+        postService.delete(id);
+
+        return "redirect:/";
     }
 
 
