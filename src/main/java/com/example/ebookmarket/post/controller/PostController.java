@@ -3,6 +3,7 @@ package com.example.ebookmarket.post.controller;
 import com.example.ebookmarket.member.entity.Member;
 import com.example.ebookmarket.member.service.MemberService;
 import com.example.ebookmarket.post.dto.PostForm;
+import com.example.ebookmarket.post.dto.PostListDto;
 import com.example.ebookmarket.post.entity.Post;
 import com.example.ebookmarket.post.service.PostService;
 import com.example.ebookmarket.security.dto.MemberContext;
@@ -29,7 +30,7 @@ public class PostController {
     @GetMapping("/list")
     public String getPostList(Model model) {
 
-        List<Post> posts = postService.getAllPost();
+        List<PostListDto> posts = postService.getAllPost();
 
         model.addAttribute("posts", posts);
 

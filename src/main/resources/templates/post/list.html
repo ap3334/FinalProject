@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html layout:decorate="~{layout/layout.html}">
 
+<head>
+    <title>글목록</title>
+</head>
+
+<body>
+<section layout:fragment="content">
+
+    <div class="container">
+
+        <ul>
+            <li th:each="post: ${posts}">
+                <div>[[${post.id}]] -- [[${post.subject}]] -- [[${post.username}]] -- [[${post.createDate}]] -- [[${post.updateDate}]]</div>
+            </li>
+        </ul>
+    </div>
+
+</section>
 </body>
 </html>

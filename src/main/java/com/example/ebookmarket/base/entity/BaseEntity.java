@@ -33,6 +33,11 @@ public class BaseEntity {
     @LastModifiedDate
     private LocalDateTime updateDate;
 
+    @Transient
+    @Builder.Default
+    private Map<String, Object> extra = new LinkedHashMap<>();
+
+
     public BaseEntity(long id) {
         this.id = id;
     }

@@ -1,8 +1,11 @@
 package com.example.ebookmarket.post.dto;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@ToString
+@Builder
 public class PostForm {
 
     private String subject;
