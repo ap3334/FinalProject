@@ -87,6 +87,11 @@ public class PostService {
         post.getExtra().put("postHashTags", postHashTags);
     }
 
+
+    public Post writePost(PostFormDto post, Long id) {
+        return writePost(post, new Member(id));
+    }
+
     public Post writePost(PostFormDto postFormDto, Member member) {
 
         Post post = Post.builder()
@@ -98,24 +103,7 @@ public class PostService {
 
         postRepository.save(post);
 
-        String keywords[] = postFormDto.getKeywords().split("#");
-
-        for (int i = 1; i < keywords.length; i++) {
-            PostKeyword postKeywords = PostKeyword.builder()
-                    .content(keywords[i].trim())
-                    .build();
-
-            postKeywordRepository.save(postKeywords);
-
-            PostHashTag postHashTag = PostHashTag.builder()
-                    .member(member)
-                    .post(post)
-                    .postKeyword(postKeywords)
-                    .build();
-
-            postHashTagRepository.save(postHashTag);
-
-        }
+        postHashTagService.applyHashTags(post, postFormDto.getKeywords());
 
         return post;
 
@@ -129,4 +117,5 @@ public class PostService {
         return postRepository.findAll(pageable).stream().toList();
 
     }
+
 }

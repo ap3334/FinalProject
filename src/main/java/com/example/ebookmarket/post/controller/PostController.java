@@ -49,7 +49,7 @@ public class PostController {
     }
 
     @GetMapping("/write")
-    public String writeForm() {
+    public String write() {
 
         return "post/write";
     }
@@ -57,10 +57,7 @@ public class PostController {
     @PostMapping("/write")
     public ResponseEntity write(@AuthenticationPrincipal MemberContext memberContext, @RequestBody PostFormDto post, RedirectAttributes redirectAttributes) {
 
-        Member member = memberService.findByUsername(memberContext.getUsername()).orElseThrow(() ->
-                new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
-
-        Post savedPost = postService.writePost(post, member);
+        Post savedPost = postService.writePost(post, memberContext.getId());
 
         redirectAttributes.addAttribute("post", savedPost);
 

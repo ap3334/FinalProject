@@ -33,4 +33,8 @@ public class Member extends BaseEntity {
         this.nickname = nickname;
         this.email = email;
     }
+
+    public Member(long id) {
+        super(id);
+    }
 }
