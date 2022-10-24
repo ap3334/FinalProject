@@ -1,4 +1,4 @@
-package com.example.ebookmarket.post.entity;
+package com.example.ebookmarket.postKeyword.entity;
 
 import com.example.ebookmarket.base.entity.BaseEntity;
 import lombok.*;

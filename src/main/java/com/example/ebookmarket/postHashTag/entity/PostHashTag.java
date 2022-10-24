@@ -1,7 +1,9 @@
-package com.example.ebookmarket.post.entity;
+package com.example.ebookmarket.postHashTag.entity;
 
 import com.example.ebookmarket.base.entity.BaseEntity;
 import com.example.ebookmarket.member.entity.Member;
+import com.example.ebookmarket.post.entity.Post;
+import com.example.ebookmarket.postKeyword.entity.PostKeyword;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -18,6 +20,7 @@ import javax.persistence.*;
 public class PostHashTag extends BaseEntity {
 
     @ManyToOne
+    @ToString.Exclude
     private Member member;
 
     @ManyToOne

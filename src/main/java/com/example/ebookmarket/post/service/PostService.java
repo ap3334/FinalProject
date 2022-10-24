@@ -3,10 +3,10 @@ package com.example.ebookmarket.post.service;
 import com.example.ebookmarket.member.entity.Member;
 import com.example.ebookmarket.post.dto.PostForm;
 import com.example.ebookmarket.post.entity.Post;
-import com.example.ebookmarket.post.entity.PostHashTag;
-import com.example.ebookmarket.post.entity.PostKeyword;
-import com.example.ebookmarket.post.repository.PostHashTagRepository;
-import com.example.ebookmarket.post.repository.PostKeywordRepository;
+import com.example.ebookmarket.postHashTag.entity.PostHashTag;
+import com.example.ebookmarket.postKeyword.entity.PostKeyword;
+import com.example.ebookmarket.postHashTag.repository.PostHashTagRepository;
+import com.example.ebookmarket.postKeyword.repository.PostKeywordRepository;
 import com.example.ebookmarket.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -14,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service
